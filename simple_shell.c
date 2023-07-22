@@ -4,7 +4,7 @@
  * _prompt - prompt cisfun
  */
 
-void _prompt()
+void _prompt(void)
 {
 	printf("#cisfun$ ");
 }
@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 		cmd_len = getline(&cmd, &cmd_size, stdin);
 		if (cmd_len == -1)
 		{
+			printf("\n");
 			break;
 		}
 		cmd[cmd_len - 1] = '\0';
@@ -46,11 +47,13 @@ int main(int argc, char *argv[])
 			args[0] = cmd;
 			args[1] = NULL;
 			execve(cmd, args, NULL);
-			perror("%s: No such file or directory\n", argv[0]);
+			printf("%s: No such file or directory\n", argv[0]);
 			exit(1);
 		}
 		else
+		{
 			wait(NULL);
+		}
 	}
 	free(cmd);
 	return (0);
