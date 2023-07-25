@@ -4,7 +4,8 @@
  * _prompt - display prompt
  */
 
-void prompt(void)
+void _prompt(void)
 {
 	printf("#cisfun$ ");
+	fflush(stdout);
 }

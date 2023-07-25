@@ -1,14 +1,4 @@
 #include "main.h"
-
-/**
- * _prompt - prompt cisfun
- */
-
-void _prompt(void)
-{
-	printf("#cisfun$ ");
-}
-
 /**
  * main - the main prog
  * @argc: input
@@ -18,14 +8,12 @@ void _prompt(void)
 
 int main(int argc, char *argv[])
 {
-	(void) argc;
-	char *cmd = NULL;
+	char *cmd = NULL, *args[MCL];
 	size_t cmd_size = 0;
 	ssize_t cmd_len;
-	/*int status;*/
 	pid_t pid;
-	char *args[2];
 
+	(void) argc;
 	while (1)
 	{
 		_prompt();
@@ -36,6 +24,9 @@ int main(int argc, char *argv[])
 			break;
 		}
 		cmd[cmd_len - 1] = '\0';
+		_ext(cmd);
+		_printenv(cmd);
+		_tokenize(args, cmd);
 		pid = fork();
 		if (pid < 0)
 		{

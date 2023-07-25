@@ -9,7 +9,8 @@
  */
 int _execve(const char *pathname, char *const argv[], char *const envp[])
 {
-	pid_t c_pid = _fork();
+	pid_t c_pid = fork();
+	int status;
 
 	if (c_pid == -1)
 	{
@@ -20,16 +21,14 @@ int _execve(const char *pathname, char *const argv[], char *const envp[])
 	if (c_pid == 0)
 	{
 		/*child process*/
-		_execve(pathname, argv, envp);
+		execve(pathname, argv, envp);
 		perror("execve"); /*execve only returns if an error occurs*/
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		/*parent process*/
-		int status;
-
-		_waitpid(c_pid, &status, 0);
+		waitpid(c_pid, &status, 0);
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 		else if (WIFSIGNALED(status))
